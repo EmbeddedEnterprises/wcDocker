@@ -322,8 +322,7 @@ define([
 
                     var panel = new (this.__getClass('wcPanel'))(this, typeName, panelType.options);
                     panel.__container(this.$transition);
-                    var panelOptions = (panelType.options && panelType.options.options) || {};
-                    panel._panelObject = new panelType.options.onCreate(panel, panelOptions);
+                    panel._panelObject = new panelType.options.onCreate(panel, options);
 
                     __addPanel.call(this, panel);
                     return panel;
