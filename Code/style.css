@@ -170,12 +170,10 @@ html, body {
 .wcModal {
 }
 
-.wcLayout, .wcLayout tr, .wcLayout td {
+.wcLayout, .wcLayout > tbody > tr, .wcLayout > tbody > tr > td {
   border: 0px;
   margin: 0px;
   padding: 0px;
-
-  border-spacing: 0px;
 }
 
 .wcLayout {
