@@ -323,6 +323,32 @@ define([
         },
 
         /**
+         * Gets, or Sets the button tooltip for the given button.
+         * @param {String} name - The name of the button
+         * @param {String} [tooltip] - If supplied, sets the new tooltip of the given button.
+         * @returns {String} - The current tooltip of the given button, or undefined if no button was found.
+         */
+        buttonTooltip: function (name, tooltip) {
+            for (var i = 0; i < this._buttonList.length; ++i) {
+                if (this._buttonList[i].name === name) {
+                    if (typeof tooltip !== 'undefined') {
+                        this._buttonList[i].tip = tooltip;
+                        if (this._parent && this._parent.instanceOf('wcFrame')) {
+                            this._parent.__onTabChange();
+                        }
+                    }
+
+                    if (this._parent && this._parent.instanceOf('wcFrame')) {
+                        this._parent.__update();
+                    }
+
+                    return this._buttonList[i].tip;
+                }
+            }
+            return undefined;
+        },
+
+        /**
          * Gets, or Sets the default position of the panel if it is floating. <b>Warning: after the panel has been initialized, this value no longer reflects the current position of the panel.</b>
          * @function module:wcPanel#initPos
          * @param {Number|String} [x] - If supplied, sets the horizontal position of the floating panel. Can be a percentage position, or a string with a 'px' or '%' suffix.
