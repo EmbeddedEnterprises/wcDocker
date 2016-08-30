@@ -556,9 +556,7 @@ define([
                 this.$tabBar.removeClass('wcNotMoveable');
             }
 
-            this.$center.children('.wcPanelTabContent').each(function () {
-                $(this).addClass('wcPanelTabContentHidden wcPanelTabUnused');
-            });
+            var $unused = this.$center.children('.wcPanelTabContent');
 
             this._titleVisible = true;
             this.$title.html('');
@@ -599,9 +597,8 @@ define([
                         isVisible: isVisible
                     });
                 }
-
-                $tabContent.removeClass('wcPanelTabUnused');
-
+                $unused = $unused.not($tabContent);
+                
                 if (isVisible) {
                     $tab && $tab.addClass('wcPanelTabActive');
                     $tabContent.removeClass('wcPanelTabContentHidden');
@@ -610,6 +607,11 @@ define([
                         var $icon = panel.$icon.clone();
                         this.$title.prepend($icon);
                     }
+                }
+                else
+                {
+                    $tab && $tab.removeClass('wcPanelTabActive');
+                    $tabContent.addClass('wcPanelTabContentHidden');
                 }
 
                 if ($tab) {
@@ -620,6 +622,8 @@ define([
                 }
             }
 
+            $unused.remove();
+            
             var $topBar = this.$titleBar;
             var tabWidth = 0;
             if (this._titleVisible) {
@@ -700,11 +704,6 @@ define([
                 this.$tabBar.remove();
                 this.$center.css('top', 0).css('left', 0).css('right', 0).css('bottom', 0);
             }
-
-            // Now remove all unused panel tabs.
-            this.$center.children('.wcPanelTabUnused').each(function () {
-                $(this).remove();
-            });
 
             if (this._titleVisible) {
                 var buttonSize = this.__onTabChange();

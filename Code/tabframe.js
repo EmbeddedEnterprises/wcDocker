@@ -459,9 +459,7 @@ define([
             var parentLeft = getOffset(this.$tabScroll);
             var self = this;
 
-            this.$center.children('.wcPanelTabContent').each(function () {
-                $(this).addClass('wcPanelTabContentHidden wcPanelTabUnused');
-            });
+            var $unused = this.$center.children('.wcPanelTabContent');
 
             for (var i = 0; i < this._layoutList.length; ++i) {
                 var $tab = $('<div id="' + i + '" class="wcPanelTab"><div>' + this._layoutList[i].name + '</div></div>');
@@ -484,11 +482,15 @@ define([
 
                 var isVisible = this._curTab === i;
 
-                $tabContent.removeClass('wcPanelTabUnused');
-
+                $unused.not($tabContent);
+                
                 if (isVisible) {
                     $tab.addClass('wcPanelTabActive');
                     $tabContent.removeClass('wcPanelTabContentHidden');
+                }
+                else
+                {
+                    $tabContent.addClass ('wcPanelTabContentHidden');
                 }
 
                 totalWidth = getOffset($tab) - parentLeft;
@@ -524,10 +526,7 @@ define([
                     break;
             }
 
-            // Now remove all unused panel tabs.
-            this.$center.children('.wcPanelTabUnused').each(function () {
-                $(this).remove();
-            });
+            $unused.remove ();
 
             var buttonSize = this.__onTabChange();
 
